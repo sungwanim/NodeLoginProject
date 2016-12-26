@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SignUp</title>
+    <title>Signup</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
@@ -9,7 +9,7 @@
     $(document).ready(function(){
         $('#loginbtn').click(function(){
             $.ajax({
-                url: '/userinf',
+                url: '/signupusr',
                 type: 'put',
                 data: {
                     ema : $('#emaf').val()+'@'+$('#emas').val(), 
@@ -17,9 +17,8 @@
                     pwd : CryptoJS.SHA256($('#usrpwd').val()).toString()
                 },
                 success: (data) => {
-                	alert(data);
-                }     
-                
+                	alert(data.email+','+data.nickname+','+data.password);
+                }
             });
         });
     });
@@ -27,10 +26,13 @@
   </head>
   <body>
     <input id="emaf"></input>
+    <label for="emaf">Email : </label>
     <label for="emas">@</label>
     <input id="emas"></input><br />
-    <input id="nickname"></input><br />
-    <input type="password" id="usrpwd"></input><br />
+    <input id="nickname"></input>
+    <label for="nickname">Nickname : </label><br />
+    <input type="password" id="usrpwd"></input>
+    <label for="password">Password : </label><br />
     <button id="loginbtn">Sign up</button>
   </body>
 </html>

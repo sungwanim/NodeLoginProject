@@ -26,25 +26,59 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+// main page
 app.get('/', (req,res) => {
 	res.status(200).render('index.ejs');
 });
+// signup page
 app.get('/signup',(req,res) => {
 	res.status(200).render('signup.ejs');
 });
+// login page
 app.get('/login',(req,res) => {
 	res.status(200).render('login.ejs');
 });
-app.put('/userinf', (req,res) => {
+// signup PUT request
+app.put('/signupusr', (req,res) => {
 	var ema = req.param('ema');
 	var nick = req.param('nick');
 	var pwd = req.param('pwd');
-	usidb.usrinfo.find({ema:ema},(error,data) => {
-		if(data.length == 0) {
-			res.send('success');
-		} else {
-			res.send('fail');
+	
+	usidb.usrinfo.find((error,data) => {
+		// success or fail
+		var statue = {
+			email : null,
+			nickname : null,
+			password : null
 		}
+		
+		// email check
+		for(var i in data) {
+			if(data[i].ema == ema) {
+				statue.email = 'fail';
+			} else {
+				statue.email = 'success';
+			}
+		}
+		
+		// nickname check
+		for(var i in data) {
+			if(data[i].nick == nick) {
+				statue.nickname = 'fail';
+			} else {
+				statue.nickname = 'success';
+			}
+		}
+		
+		// password check
+		for(var i in data) {
+			if(data[i].pwd == pwd) {
+				statue.password = 'fail';
+			} else {
+				statue.password = 'success';
+			}
+		}
+		res.send(statue);
 	});
 });
 
