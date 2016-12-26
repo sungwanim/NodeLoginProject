@@ -78,6 +78,9 @@ app.put('/signupusr', (req,res) => {
 				statue.password = 'success';
 			}
 		}
+		if(statue.email,statue.nickname,statue.password == 'success') {
+			usidb.usrinfo.save({ ema : ema, nick : nick, pwd : pwd});
+		}
 		res.send(statue);
 	});
 });
