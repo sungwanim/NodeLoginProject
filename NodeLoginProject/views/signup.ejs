@@ -7,9 +7,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/sha256.js"></script>
     <script>
     $(document).ready(function(){
-        $('#loginbtn').click(function(){
-            $.ajax({
-                url: '/signupusr',
+		var userlist;
+		var statue;
+		$.get('/userlist', (data) => {
+			userlist = data;
+		});
+			$('#password').keyup(() => {
+				console.log('yeah');
+			});
+        $('#signupbtn').click(function(){
+			if($('#emaf').val() == '') {
+				console.log($('#emaf').val());
+			} else {
+            /*$.ajax({
+                url: '/signup',
                 type: 'put',
                 data: {
                     ema : $('#emaf').val()+'@'+$('#emas').val(), 
@@ -17,22 +28,45 @@
                     pwd : CryptoJS.SHA256($('#usrpwd').val()).toString()
                 },
                 success: (data) => {
-                	alert(data.email+','+data.nickname+','+data.password);
+                	console.log(data);
+					    var out;
+					    out = '.';
+						if(data.email == 'fail') {
+							out += 'Email is already taken!';
+						}
+						if(data.nickname == 'fail') {
+							out += 'Nickname is already taken!';
+						}
+						if(data.password == 'fail') {
+							out += 'Password is already taken!';
+						}
+						if(data.email,data.nickname,data.password == 'success') {
+							location.href='/';
+						}
+						if(out == '.') {
+						alert('success');
+						} else {
+						alert(out);
+					    }
                 }
-            });
+            });*/
+			}
         });
     });
     </script>
   </head>
   <body>
-    <label for="emaf">Email :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+    <label for="emaf">Email :&nbsp;&nbsp;&nbsp;&nbsp;</label>
     <input id="emaf"></input>
     <label for="emas">@</label>
     <input id="emas"></input><br />
+	<label id="emaillab" for="emas" class="salert">Plase enter your email</label><br />
     <label for="nickname">Nickname : </label>
     <input id="nickname"></input><br />
+	<label id="nicklab" for="nickname" class="salert">Plase enter your nickname</label><br />
     <label for="password">Password : </label>
     <input type="password" id="usrpwd"></input><br />
-    <button id="loginbtn">Sign up</button>
+	<label id="pwdlab" for="password" class="salert">Please enter your password</label><br />
+    <button id="signupbtn">Sign up</button>
   </body>
 </html>

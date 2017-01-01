@@ -6,6 +6,7 @@
 var express = require('express')
   , http = require('http')
   , path = require('path')
+  , crypto = require('crypto')
   , usidb = require('mongojs').connect('loginproject', ['usrinfo']);
 
 var app = express();
@@ -30,6 +31,12 @@ if ('development' == app.get('env')) {
 app.get('/', (req,res) => {
 	res.status(200).render('index.ejs');
 });
+// user list
+app.get('/userlist', (req,res) => {
+	usidb.usrinfo.find((error,data) => {
+		res.send(data);
+	});
+});
 // signup page
 app.get('/signup',(req,res) => {
 	res.status(200).render('signup.ejs');
@@ -39,7 +46,8 @@ app.get('/login',(req,res) => {
 	res.status(200).render('login.ejs');
 });
 // signup PUT request
-app.put('/signupusr', (req,res) => {
+/*
+app.put('/signup', (req,res) => {
 	var ema = req.param('ema');
 	var nick = req.param('nick');
 	var pwd = req.param('pwd');
@@ -78,13 +86,18 @@ app.put('/signupusr', (req,res) => {
 				statue.password = 'success';
 			}
 		}
+		console.log(statue);
 		if(statue.email,statue.nickname,statue.password == 'success') {
 			usidb.usrinfo.save({ ema : ema, nick : nick, pwd : pwd});
 		}
 		res.send(statue);
 	});
-});
+*/
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('LoginProject server listening on 127.0.0.1:' + app.get('port'));
+  /*var passha = crypto.createHash('sha256');
+  passha.update('bluepickaxe');
+  var pasout = passha.digest('hex');
+  console.log(pasout);*/
 });
