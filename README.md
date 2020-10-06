@@ -1,3 +1,2 @@
-# NodeLoginProject
-Node.js LoginProject<br />
-use **MongoDB**
+mongoDB와 Node.js로 회원가입과 로그인을 구현하는 시스템인데 원래 제대로 작동하던걸 어찌어지하다가 이렇게만들어버렸다.
+2020년 현재는 아마 작동이 아예 안되겠지만 옛날을 기념하는 프로젝트로 남겨놓음
